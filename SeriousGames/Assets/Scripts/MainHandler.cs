@@ -16,11 +16,33 @@ public class MainHandler : MonoBehaviour {
     public Text textDay;
     public Text textActionsLeft;
 
+    public Text textTotalCO2;
+    public Text textTotalContamination;
+
     int[] slotOptions;
 
     int[] worldSlotStatus;
 
     public SpriteRenderer[] worldSlots;
+
+    public GameObject barFoodFill;
+    public GameObject barCO2Fill;
+    public GameObject barContaminationFill;
+    public GameObject barDeathFill;
+    public GameObject barFoodMarker;
+    public GameObject barWellfareMarker;
+
+    Vector3 barFoodPosition;
+    Vector3 barCO2Position;
+    Vector3 barContaminationPosition;
+    Vector3 barDeathPosition;
+    Vector3 barFoodMarkerPosition;
+    Vector3 barWellfareMarkerPosition;
+
+    public int maxFood = 100;
+    public int maxCO2 = 100;
+    public int maxContamination = 100;
+    public int maxDeaths = 100;
 
     int selectedBuilding;
 
@@ -37,12 +59,21 @@ public class MainHandler : MonoBehaviour {
     int currentPosition;
 
     int currentActionsLeft;
+
+    int COWFARM = 0, CHICKENFARM = 1, EGGFARM = 2, WEEDFARM = 3, CABBAGEFARM = 4, FOREST = 5;
     
     // Use this for initialization
     void Start ()
     {
         slotOptions = new int[3];
         worldSlotStatus = new int[8];
+
+        barFoodPosition = barFoodFill.transform.position;
+        barCO2Position = barCO2Fill.transform.position;
+        barContaminationPosition = barContaminationFill.transform.position;
+        barDeathPosition = barDeathFill.transform.position;
+        barFoodMarkerPosition = barFoodMarker.transform.position;
+        barWellfareMarkerPosition = barWellfareMarker.transform.position;
 
         InitGame();
 	}
@@ -57,6 +88,14 @@ public class MainHandler : MonoBehaviour {
         selectedBuilding = -1;
         currentPosition = 0;
         currentActionsLeft = 2;
+        currentWellfare = 10;
+        requiredFood = 1;
+
+        for (int i = 0; i < 3; i++)
+        {
+            worldSlotStatus[Random.Range(0, 8)] = FOREST;
+        }
+
         NewDay();
         CheckChanges();
     }
@@ -66,7 +105,28 @@ public class MainHandler : MonoBehaviour {
     {
         textDay.text = "Day " + currentDay;
         textActionsLeft.text = "Actions Left: " + currentActionsLeft;
-	}
+
+        textTotalCO2.text = "Total CO2: " + totalCO2;
+        textTotalContamination.text = "Total Contamination: " + totalContamination;
+
+        // update bars
+        barFoodFill.transform.localScale = new Vector3(((float)currentFood / (float)maxFood), 1f);
+        barFoodFill.transform.position = barFoodPosition + new Vector3(-(1 - ((float)currentFood / (float)maxFood)) * 2.08f, 0);
+
+        barCO2Fill.transform.localScale = new Vector3(((float)currentCO2 / (float)maxCO2), 1f);
+        barCO2Fill.transform.position = barCO2Position + new Vector3(-(1 - ((float)currentCO2 / (float)maxCO2)) * 1.88f, 0);
+
+        barContaminationFill.transform.localScale = new Vector3(((float)currentContamination / (float)maxContamination), 1f);
+        barContaminationFill.transform.position = barContaminationPosition + new Vector3(-(1 - ((float)currentContamination / (float)maxContamination)) * 1.28f, 0);
+
+        barDeathFill.transform.localScale = new Vector3(((float)currentDeaths / (float)maxDeaths), 1f);
+        barDeathFill.transform.position = barDeathPosition + new Vector3(-(1 - ((float)currentDeaths / (float)maxDeaths)) * 2.08f, 0);
+
+        // update markers
+        barFoodMarker.transform.position = barFoodMarkerPosition + new Vector3(((float)requiredFood / (float)maxFood) * 4, 0);
+
+        barWellfareMarker.transform.position = barWellfareMarkerPosition + new Vector3(((float)currentWellfare / (float)20) * 7, 0);
+    }
 
     void CheckChanges()
     {
@@ -113,7 +173,7 @@ public class MainHandler : MonoBehaviour {
         for (int i = 0; i < worldSlotStatus.Length; i++)
         {
             if (worldSlotStatus[i] == -1) worldSlots[i].enabled = false;
-            if (worldSlotStatus[i] > -1 && worldSlotStatus[i] < 5)
+            if (worldSlotStatus[i] > -1 && worldSlotStatus[i] < 6)
             {
                 worldSlots[i].sprite = spriteSlots[worldSlotStatus[i]];
                 worldSlots[i].enabled = true;
@@ -130,6 +190,17 @@ public class MainHandler : MonoBehaviour {
             slots[i].sprite = spriteSlots[slotOptions[i]];
         }
 
+        //update totals
+        totalCO2 += currentCO2;
+        totalContamination += currentContamination;
+
+        if (currentFood < requiredFood)
+        {
+            currentDeaths += requiredFood - currentFood;
+        }
+
+        requiredFood += 2;
+
         currentDay++;
         selectedBuilding = -1;
         currentActionsLeft = 2;
@@ -137,11 +208,36 @@ public class MainHandler : MonoBehaviour {
 
     public void SelectBuilding(int slot)
     {
-        if (worldSlotStatus[currentPosition] != -1) return;
+        if (worldSlotStatus[currentPosition] != -1 || currentActionsLeft <= 0) return;
 
         selectedBuilding = slotOptions[slot];
 
         worldSlotStatus[currentPosition] = selectedBuilding;
+
+        // apply stats from buldings
+        if (selectedBuilding == COWFARM)
+        {
+            currentFood += 4;
+            currentCO2 += 3;
+        }
+        if (selectedBuilding == CHICKENFARM)
+        {
+            currentFood += 3;
+            currentCO2 += 2;
+        }
+        if (selectedBuilding == EGGFARM)
+        {
+            currentFood += 2;
+            currentCO2 += 1;
+        }
+        if (selectedBuilding == WEEDFARM)
+        {
+            currentFood += 1;
+        }
+        if (selectedBuilding == CABBAGEFARM)
+        {
+            currentFood += 1;
+        }
 
         currentActionsLeft--;
 
