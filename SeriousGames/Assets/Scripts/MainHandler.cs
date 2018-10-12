@@ -60,7 +60,8 @@ public class MainHandler : MonoBehaviour {
 
     int currentActionsLeft;
 
-    int COWFARM = 0, CHICKENFARM = 1, EGGFARM = 2, WEEDFARM = 3, CABBAGEFARM = 4, FOREST = 5;
+    int NOTHING = -1, COWFARM = 0, CHICKENFARM = 1, EGGFARM = 2, WEEDFARM = 3, CABBAGEFARM = 4, FOREST = 5, 
+        COWHAPPY = 6, COWFOOD = 7, CHICKENHAPPY = 8, CHICKENFOOD = 9, EGGHAPPY = 10, EGGFOOD = 11, WEEDFOOD = 12, CABBAGEFOOD = 13;
     
     // Use this for initialization
     void Start ()
@@ -117,7 +118,7 @@ public class MainHandler : MonoBehaviour {
         barCO2Fill.transform.position = barCO2Position + new Vector3(-(1 - ((float)currentCO2 / (float)maxCO2)) * 1.88f, 0);
 
         barContaminationFill.transform.localScale = new Vector3(((float)currentContamination / (float)maxContamination), 1f);
-        barContaminationFill.transform.position = barContaminationPosition + new Vector3(-(1 - ((float)currentContamination / (float)maxContamination)) * 1.28f, 0);
+        barContaminationFill.transform.position = barContaminationPosition + new Vector3(-(1 - ((float)currentContamination / (float)maxContamination)) * 1.74f, 0);
 
         barDeathFill.transform.localScale = new Vector3(((float)currentDeaths / (float)maxDeaths), 1f);
         barDeathFill.transform.position = barDeathPosition + new Vector3(-(1 - ((float)currentDeaths / (float)maxDeaths)) * 2.08f, 0);
@@ -261,6 +262,154 @@ public class MainHandler : MonoBehaviour {
                 CheckChanges();
 
             }
+        }
+    }
+
+    public void Upgrade(bool happy)
+    {
+        if (worldSlotStatus[currentPosition] == COWFARM)
+        {
+            if (happy)
+            {
+                currentWellfare += 2;
+                worldSlotStatus[currentPosition] = COWHAPPY;
+                currentActionsLeft -= 1;
+            }
+            else
+            {
+                currentWellfare -= 2;
+                currentFood += 1;
+                currentCO2 += 1;
+                worldSlotStatus[currentPosition] = COWFOOD;
+                currentActionsLeft -= 1;
+            }
+        }
+        if (worldSlotStatus[currentPosition] == CHICKENFARM)
+        {
+            if (happy)
+            {
+                currentWellfare += 1;
+                worldSlotStatus[currentPosition] = CHICKENHAPPY;
+                currentActionsLeft -= 1;
+            }
+            else
+            {
+                currentWellfare -= 3;
+                currentFood += 2;
+                worldSlotStatus[currentPosition] = CHICKENFOOD;
+                currentActionsLeft -= 1;
+            }
+        }
+        if (worldSlotStatus[currentPosition] == EGGFARM)
+        {
+            if (happy)
+            {
+                currentWellfare += 2;
+                worldSlotStatus[currentPosition] = EGGHAPPY;
+                currentActionsLeft -= 1;
+            }
+            else
+            {
+                currentWellfare -= 1;
+                currentFood += 1;
+                currentCO2 -= 1;
+                worldSlotStatus[currentPosition] = EGGFOOD;
+                currentActionsLeft -= 1;
+            }
+        }
+        if (worldSlotStatus[currentPosition] == WEEDFARM)
+        {
+            if (!happy)
+            {
+                currentContamination += 3;
+                currentFood += 2;
+                worldSlotStatus[currentPosition] = WEEDFOOD;
+                currentActionsLeft -= 1;
+            }
+        }
+        if (worldSlotStatus[currentPosition] == CABBAGEFARM)
+        {
+            if (!happy)
+            {
+                currentContamination += 2;
+                currentFood += 1;
+                worldSlotStatus[currentPosition] = CABBAGEFOOD;
+                currentActionsLeft -= 1;
+            }
+        }
+
+    }
+
+    public void Trash()
+    {
+        if (!(worldSlotStatus[currentPosition] == NOTHING))
+        {
+            if (worldSlotStatus[currentPosition] == COWFARM || worldSlotStatus[currentPosition] == COWHAPPY || worldSlotStatus[currentPosition] == COWFOOD)
+            {
+                currentFood -= 4;
+                currentCO2 -= 3;
+            }
+            if (worldSlotStatus[currentPosition] == CHICKENFARM || worldSlotStatus[currentPosition] == CHICKENFOOD || worldSlotStatus[currentPosition] == CHICKENHAPPY)
+            {
+                currentFood -= 3;
+                currentCO2 -= 2;
+            }
+            if (worldSlotStatus[currentPosition] == EGGFARM || worldSlotStatus[currentPosition] == EGGFOOD || worldSlotStatus[currentPosition] == EGGHAPPY)
+            {
+                currentFood -= 2;
+                currentCO2 -= 1;
+            }
+            if (worldSlotStatus[currentPosition] == WEEDFARM || worldSlotStatus[currentPosition] == WEEDFOOD)
+            {
+                currentFood -= 1;
+            }
+            if (worldSlotStatus[currentPosition] == CABBAGEFARM || worldSlotStatus[currentPosition] == CABBAGEFOOD)
+            {
+                currentFood -= 1;
+            }
+            if (worldSlotStatus[currentPosition] == COWHAPPY)
+            {
+                currentWellfare += 2;
+            }
+            if (worldSlotStatus[currentPosition] == COWFOOD)
+            {
+                currentWellfare += 2;
+                currentFood -= 1;
+                currentCO2 -= 1;
+            }
+            if (worldSlotStatus[currentPosition] == CHICKENHAPPY)
+            {
+                currentWellfare -= 1;
+            }
+            if (worldSlotStatus[currentPosition] == CHICKENFOOD)
+            {
+                currentWellfare += 3;
+                currentFood -= 2;
+            }
+            if (worldSlotStatus[currentPosition] == EGGHAPPY)
+            {
+                currentWellfare -= 2;
+            }
+            if (worldSlotStatus[currentPosition] == EGGFOOD)
+            {
+                currentWellfare += 1;
+                currentFood -= 1;
+                currentCO2 += 1;
+            }
+            if (worldSlotStatus[currentPosition] == WEEDFOOD)
+            {
+                currentContamination -= 3;
+                currentFood -= 2;
+            }
+            if (worldSlotStatus[currentPosition] == CABBAGEFOOD)
+            {
+                currentContamination -= 2;
+                currentFood -= 1;
+            }
+
+            worldSlotStatus[currentPosition] = NOTHING;
+            currentActionsLeft -= 1;
+            CheckChanges();
         }
     }
 }
