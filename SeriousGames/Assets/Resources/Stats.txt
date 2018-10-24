@@ -1,0 +1,29 @@
+Food req per day: 1, 2, 4, 6, 8, 9, 11, 13, 14, 16, 17, 19, 22, 24, 27
+        
+        Limits:
+        Co2: Warning 30, 60, death 75
+        Contamination: Warning 20, death 40
+        Death: Warning 10, death 15
+
+        Chicken farm:
+        3 food, 2 co2
+        Food: +2 food, -3 AW, -1 co2
+        Happy: AW +1
+
+        Cow farm:
+        4 food, 3 co2
+        Food: +1 food, -1 AW, +1 co2
+        Happy: -1 food, +2 AW
+
+        Egg farm:
+        2 food, 1 co2
+        Food: +1 food, -1 AW
+        Happy: +2 AW
+
+        Weed farm:
+        1 food
+        Food: +2 food, +3 Con
+
+        Cabbage farm:
+        1 food
+        Food: +1 food, +2 Con
