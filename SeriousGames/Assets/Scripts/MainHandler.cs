@@ -52,6 +52,7 @@ public class MainHandler : MonoBehaviour {
     int requiredFood;
     int[] foodReqs;
     int currentFoodReqPosition;
+    int extraFood;
 
     int currentCO2;
     int currentContamination;
@@ -129,6 +130,7 @@ public class MainHandler : MonoBehaviour {
     void InitGame()
     {
         currentFood = 0;
+        extraFood = 0;
         currentContamination = 0;
         currentCO2 = 0;
         currentDeaths = 0;
@@ -182,60 +184,61 @@ public class MainHandler : MonoBehaviour {
         float tCurrentCO2 = currentCO2 - currentNumberOfTrees;
         tCurrentCO2 = Mathf.Clamp(tCurrentCO2, 0, 100);
         barCO2Fill.transform.localScale = new Vector3((tCurrentCO2 / (float)maxCO2), 1f);
-        barCO2Fill.transform.position = barCO2Position + new Vector3(-(1 - (tCurrentCO2 / (float)maxCO2)) * 1.88f, 0);
+        barCO2Fill.transform.position = barCO2Position + new Vector3(-(1 - (tCurrentCO2 / (float)maxCO2)) * 1.78f, 0);
 
         barContaminationFill.transform.localScale = new Vector3(((float)currentContamination / (float)maxContamination), 1f);
-        barContaminationFill.transform.position = barContaminationPosition + new Vector3(-(1 - ((float)currentContamination / (float)maxContamination)) * 1.74f, 0);
+        barContaminationFill.transform.position = barContaminationPosition + new Vector3(-(1 - ((float)currentContamination / (float)maxContamination)) * 1.78f, 0);
 
         barDeathFill.transform.localScale = new Vector3(((float)currentDeaths / (float)maxDeaths), 1f);
-        barDeathFill.transform.position = barDeathPosition + new Vector3(-(1 - ((float)currentDeaths / (float)maxDeaths)) * 2.08f, 0);
+        barDeathFill.transform.position = barDeathPosition + new Vector3(-(1 - ((float)currentDeaths / (float)maxDeaths)) * 1.78f, 0);
 
         // update markers
         barFoodMarker.transform.position = barFoodMarkerPosition + new Vector3(((float)requiredFood / (float)maxFood) * 4, 0);
 
-        barWellfareMarker.transform.position = barWellfareMarkerPosition + new Vector3(((float)currentWellfare / (float)20) * 7, 0);
+        barWellfareMarker.transform.position = barWellfareMarkerPosition + new Vector3(((float)currentWellfare / (float)20) * 4.1f, 0);
     }
 
     void CheckChanges()
     {
+        // + 2.61
         if (currentPosition == 0)
         {
-            player.transform.position = new Vector3(-2.7f, 3.49f);
+            player.transform.position = new Vector3(-0.09f, 3.49f);
             player.transform.eulerAngles = new Vector3(0, 0, 0);
         }
         if (currentPosition == 1)
         {
-            player.transform.position = new Vector3(-5.98f, 2.47f);
+            player.transform.position = new Vector3(-3.37f, 2.47f);
             player.transform.eulerAngles = new Vector3(0, 0, 45);
         }
         if (currentPosition == 2)
         {
-            player.transform.position = new Vector3(-7f, -0.2f);
+            player.transform.position = new Vector3(-4.39f, -0.2f);
             player.transform.eulerAngles = new Vector3(0, 0, 90);
         }
         if (currentPosition == 3)
         {
-            player.transform.position = new Vector3(-5.86f, -3.14f);
+            player.transform.position = new Vector3(-3.25f, -3.14f);
             player.transform.eulerAngles = new Vector3(0, 0, 135);
         }
         if (currentPosition == 4)
         {
-            player.transform.position = new Vector3(-2.81f, -4.51f);
+            player.transform.position = new Vector3(-0.2f, -4.51f);
             player.transform.eulerAngles = new Vector3(0, 0, 180);
         }
         if (currentPosition == 5)
         {
-            player.transform.position = new Vector3(0.26f, -3.5f);
+            player.transform.position = new Vector3(2.87f, -3.5f);
             player.transform.eulerAngles = new Vector3(0, 0, 225);
         }
         if (currentPosition == 6)
         {
-            player.transform.position = new Vector3(1.91f, -0.51f);
+            player.transform.position = new Vector3(4.52f, -0.51f);
             player.transform.eulerAngles = new Vector3(0, 0, 270);
         }
         if (currentPosition == 7)
         {
-            player.transform.position = new Vector3(0.74f, 2.98f);
+            player.transform.position = new Vector3(3.35f, 2.98f);
             player.transform.eulerAngles = new Vector3(0, 0, 315);
         }
         for (int i = 0; i < worldSlotStatus.Length; i++)
@@ -271,11 +274,16 @@ public class MainHandler : MonoBehaviour {
         if (currentFood < requiredFood)
         {
             currentDeaths += requiredFood - currentFood;
+            if (requiredFood - currentFood == 1)
+            {
+                extraFood += 1;
+                requiredFood = foodReqs[currentFoodReqPosition] + extraFood;
+            }
         }
         else
         {
             currentFoodReqPosition += 1;
-            requiredFood = foodReqs[currentFoodReqPosition];
+            requiredFood = foodReqs[currentFoodReqPosition] + extraFood;
         }
         selectedBuilding = -1;
 
