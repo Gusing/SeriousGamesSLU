@@ -62,6 +62,9 @@ TagManager:
   - name: BarFills
     uniqueID: 671473707
     locked: 0
+  - name: BarOverlays
+    uniqueID: 510572877
+    locked: 0
   - name: BarMarkers
     uniqueID: 2046654729
     locked: 0
