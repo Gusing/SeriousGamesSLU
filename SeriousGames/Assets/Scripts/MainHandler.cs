@@ -27,6 +27,9 @@ public class MainHandler : MonoBehaviour {
 
     public SpriteRenderer[] worldSlots;
 
+    public SpriteRenderer[] worldLandSlots;
+    public Sprite[] spriteLandSlots;
+
     public GameObject barFoodFill;
     public GameObject barCO2Fill;
     public GameObject barContaminationFill;
@@ -40,6 +43,10 @@ public class MainHandler : MonoBehaviour {
     Vector3 barDeathPosition;
     Vector3 barFoodMarkerPosition;
     Vector3 barWellfareMarkerPosition;
+
+    public GameObject btnUpgradeFood;
+    public GameObject btnUpgradeHappy;
+    public GameObject btnTrash;
 
     public int maxFood = 35;
     public int maxCO2 = 40;
@@ -143,6 +150,12 @@ public class MainHandler : MonoBehaviour {
         {
             worldSlotStatus[i] = -1;
         }
+
+        // randomize land slots
+        for (int i = 0; i < worldLandSlots.Length; i++)
+        {
+            worldLandSlots[i].sprite = spriteLandSlots[Random.Range(0, spriteLandSlots.Length)];
+        }
         selectedBuilding = -1;
         currentPosition = 0;
         currentActionsLeft = 2;
@@ -162,7 +175,7 @@ public class MainHandler : MonoBehaviour {
         CheckChanges();
     }
 	
-	void Update ()
+	void Update()
     {
         textDay.text = "Year " + currentDay;
         textActionsLeft.text = "Actions Left: " + currentActionsLeft;
@@ -176,6 +189,30 @@ public class MainHandler : MonoBehaviour {
         {
             if (worldSlotStatus[i] == FOREST) currentNumberOfTrees += 1;
         }
+
+        if ((worldSlotStatus[currentPosition] == COWFARM ||
+            worldSlotStatus[currentPosition] == CHICKENFARM ||
+            worldSlotStatus[currentPosition] == EGGFARM ||
+            worldSlotStatus[currentPosition] == CABBAGEFARM ||
+            worldSlotStatus[currentPosition] == WEEDFARM) &&
+            currentActionsLeft > 0)
+        {
+            btnUpgradeFood.SetActive(true);
+            btnUpgradeHappy.SetActive(true);
+        }
+        else
+        {
+            btnUpgradeFood.SetActive(false);
+            btnUpgradeHappy.SetActive(false);
+        }
+
+        if (worldSlotStatus[currentPosition] != NOTHING &&
+            currentActionsLeft > 0)
+        {
+            btnTrash.SetActive(true);
+        }
+        else btnTrash.SetActive(false);
+
 
         // update bars
         barFoodFill.transform.localScale = new Vector3(((float)currentFood / (float)maxFood), 1f);
@@ -244,12 +281,15 @@ public class MainHandler : MonoBehaviour {
         for (int i = 0; i < worldSlotStatus.Length; i++)
         {
             if (worldSlotStatus[i] == -1) worldSlots[i].enabled = false;
-            if (worldSlotStatus[i] > -1 && worldSlotStatus[i] < 6)
+            if (worldSlotStatus[i] > -1 && worldSlotStatus[i] < 14)
             {
                 worldSlots[i].sprite = spriteSlots[worldSlotStatus[i]];
                 worldSlots[i].enabled = true;
             }
         }
+        btnUpgradeFood.transform.position = player.transform.position + new Vector3(-1.1f, 1.2f);
+        btnUpgradeHappy.transform.position = player.transform.position + new Vector3(1.1f, 1.2f);
+        btnTrash.transform.position = player.transform.position + new Vector3(0f, -0.3f);
     }
 
     public void NewDay()
