@@ -198,11 +198,21 @@ public class MainHandler : MonoBehaviour {
             currentActionsLeft > 0)
         {
             btnUpgradeFood.SetActive(true);
-            btnUpgradeHappy.SetActive(true);
         }
         else
         {
             btnUpgradeFood.SetActive(false);
+        }
+
+        if ((worldSlotStatus[currentPosition] == COWFARM ||
+            worldSlotStatus[currentPosition] == CHICKENFARM ||
+            worldSlotStatus[currentPosition] == EGGFARM) &&
+            currentActionsLeft > 0)
+        {
+            btnUpgradeHappy.SetActive(true);
+        }
+        else
+        {
             btnUpgradeHappy.SetActive(false);
         }
 
