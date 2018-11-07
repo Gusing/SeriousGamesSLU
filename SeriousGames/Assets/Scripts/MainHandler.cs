@@ -78,6 +78,12 @@ public class MainHandler : MonoBehaviour {
     bool gameOver;
     public Text textNextYear;
 
+    public Sprite spriteEndNormal;
+    public Sprite spriteEndDeath;
+    public Sprite spriteEndFlood;
+    public Sprite spriteEndContaminated;
+    public SpriteRenderer popup;
+
     int currentNumberOfTrees;
 
     readonly int NOTHING = -1, COWFARM = 0, CHICKENFARM = 1, EGGFARM = 2, WEEDFARM = 3, CABBAGEFARM = 4, FOREST = 5, 
@@ -144,8 +150,9 @@ public class MainHandler : MonoBehaviour {
         totalCO2 = 0;
         totalContamination = 0;
         currentFoodReqPosition = -1;
-
         currentDay = 0;
+        popup.enabled = false;
+
         for (int i = 0; i < worldSlotStatus.Length; i++)
         {
             worldSlotStatus[i] = -1;
@@ -226,23 +233,23 @@ public class MainHandler : MonoBehaviour {
 
         // update bars
         barFoodFill.transform.localScale = new Vector3(((float)currentFood / (float)maxFood), 1f);
-        barFoodFill.transform.position = barFoodPosition + new Vector3(-(1 - ((float)currentFood / (float)maxFood)) * 2.08f, 0);
+        barFoodFill.transform.position = barFoodPosition + new Vector3(-(1 - ((float)currentFood / (float)maxFood)) * 1.52f, 0);
         
         float tCurrentCO2 = currentCO2 - currentNumberOfTrees;
         tCurrentCO2 = Mathf.Clamp(tCurrentCO2, 0, 100);
         barCO2Fill.transform.localScale = new Vector3((tCurrentCO2 / (float)maxCO2), 1f);
-        barCO2Fill.transform.position = barCO2Position + new Vector3(-(1 - (tCurrentCO2 / (float)maxCO2)) * 1.78f, 0);
+        barCO2Fill.transform.position = barCO2Position + new Vector3(-(1 - (tCurrentCO2 / (float)maxCO2)) * 1.52f, 0);
 
         barContaminationFill.transform.localScale = new Vector3(((float)currentContamination / (float)maxContamination), 1f);
-        barContaminationFill.transform.position = barContaminationPosition + new Vector3(-(1 - ((float)currentContamination / (float)maxContamination)) * 1.78f, 0);
+        barContaminationFill.transform.position = barContaminationPosition + new Vector3(-(1 - ((float)currentContamination / (float)maxContamination)) * 1.52f, 0);
 
         barDeathFill.transform.localScale = new Vector3(((float)currentDeaths / (float)maxDeaths), 1f);
         barDeathFill.transform.position = barDeathPosition + new Vector3(-(1 - ((float)currentDeaths / (float)maxDeaths)) * 1.78f, 0);
 
         // update markers
-        barFoodMarker.transform.position = barFoodMarkerPosition + new Vector3(((float)requiredFood / (float)maxFood) * 4, 0);
+        barFoodMarker.transform.position = barFoodMarkerPosition + new Vector3(((float)requiredFood / (float)maxFood) * 3.04f, 0);
 
-        barWellfareMarker.transform.position = barWellfareMarkerPosition + new Vector3(((float)currentWellfare / (float)20) * 4.1f, 0);
+        barWellfareMarker.transform.position = barWellfareMarkerPosition + new Vector3(((float)currentWellfare / (float)20) * 3.04f, 0);
     }
 
     void CheckChanges()
@@ -340,28 +347,33 @@ public class MainHandler : MonoBehaviour {
         //check game over
         if (currentDeaths >= maxDeaths)
         {
+            popup.sprite = spriteEndDeath;
+            popup.enabled = true;
             currentDeaths = maxDeaths;
-            textGameOver.text = "ALL IS DEAD";
             gameOver = true;
             textNextYear.text = "Restart";
         }
         else if (totalCO2 >= maxTotalCO2)
         {
+            popup.sprite = spriteEndFlood;
+            popup.enabled = true;
             totalCO2 = maxTotalCO2;
-            textGameOver.text = "ALL IS MELTED";
             gameOver = true;
             textNextYear.text = "Restart";
         }
         else if (totalContamination >= maxTotalContamination)
         {
+            popup.sprite = spriteEndContaminated;
+            popup.enabled = true;
             totalContamination = maxTotalContamination;
-            textGameOver.text = "ALL IS CONTAMINATED";
             gameOver = true;
             textNextYear.text = "Restart";
         }
         else if (currentDay == 15)
         {
-            textGameOver.text = "Game Complete. Score: " + Mathf.RoundToInt(((maxTotalContamination - totalContamination) + (maxTotalCO2 - totalCO2) + (maxDeaths - currentDeaths)) * ((float)currentWellfare / 10f));
+            popup.sprite = spriteEndNormal;
+            popup.enabled = true;
+            textGameOver.text = Mathf.RoundToInt(((maxTotalContamination - totalContamination) + (maxTotalCO2 - totalCO2) + (maxDeaths - currentDeaths)) * ((float)currentWellfare / 10f)).ToString();
             gameOver = true;
             textNextYear.text = "Restart";
         }

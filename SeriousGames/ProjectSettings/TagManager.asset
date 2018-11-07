@@ -68,6 +68,9 @@ TagManager:
   - name: BarMarkers
     uniqueID: 2046654729
     locked: 0
+  - name: EndCards
+    uniqueID: 1271437771
+    locked: 0
   - name: HUD
     uniqueID: 3434103593
     locked: 0
