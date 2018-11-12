@@ -520,6 +520,7 @@ public class MainHandler : MonoBehaviour {
             }
         }
 
+		CheckChanges();
     }
 
     public void Trash()
