@@ -50,11 +50,26 @@ TagManager:
   - name: Slots
     uniqueID: 2599145417
     locked: 0
+  - name: Objects
+    uniqueID: 1660346077
+    locked: 0
+  - name: Player
+    uniqueID: 3851967685
+    locked: 0
   - name: Bars
     uniqueID: 1489152507
     locked: 0
-  - name: Objects
-    uniqueID: 1660346077
+  - name: BarFills
+    uniqueID: 671473707
+    locked: 0
+  - name: BarOverlays
+    uniqueID: 510572877
+    locked: 0
+  - name: BarMarkers
+    uniqueID: 2046654729
+    locked: 0
+  - name: EndCards
+    uniqueID: 1271437771
     locked: 0
   - name: HUD
     uniqueID: 3434103593
