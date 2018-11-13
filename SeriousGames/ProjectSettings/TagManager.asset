@@ -59,6 +59,9 @@ TagManager:
   - name: Bars
     uniqueID: 1489152507
     locked: 0
+  - name: SlotsOverlay
+    uniqueID: 1490803331
+    locked: 0
   - name: BarFills
     uniqueID: 671473707
     locked: 0
