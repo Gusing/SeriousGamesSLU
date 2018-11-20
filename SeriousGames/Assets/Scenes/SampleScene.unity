@@ -1576,6 +1576,7 @@ GameObject:
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 519420030}
+  - component: {fileID: 519420034}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1653,6 +1654,36 @@ MonoBehaviour:
   - {fileID: 21300000, guid: ab892b6e49640964fa5f5e124eddd0ea, type: 3}
   - {fileID: 21300000, guid: 1510766d7842a1b47bede1bdd46e29b6, type: 3}
   - {fileID: 21300000, guid: b19d75edfecc2e247abf43eac9460816, type: 3}
+  - {fileID: 21300000, guid: e07403e5916b23543ae45c36a067a1dd, type: 3}
+  - {fileID: 21300000, guid: 9cad857c879d7054c91823d7107d252a, type: 3}
+  - {fileID: 21300000, guid: 8987068e6c0f26a43be59ee834b98566, type: 3}
+  - {fileID: 21300000, guid: 72bdf6dc54586e64fb575b7fd5cf1328, type: 3}
+  - {fileID: 21300000, guid: 81c5124ddb0e81543a0591ed5675f8bf, type: 3}
+  - {fileID: 21300000, guid: f31eed0ee7999ff4abf99dbf1c19cd8f, type: 3}
+  - {fileID: 21300000, guid: eb70404d5a4f84f4e9dbbf44f3e8e446, type: 3}
+  - {fileID: 21300000, guid: 1c180e85c9587f84d8a1f3ecebbec299, type: 3}
+  - {fileID: 21300000, guid: 8871a55f7dccba9418ee19040b7c9a6f, type: 3}
+  - {fileID: 21300000, guid: 77413882754d25a4591422a189dbbf42, type: 3}
+  - {fileID: 21300000, guid: 3bd5726a4a900e2459458a751dbfcf04, type: 3}
+  - {fileID: 21300000, guid: 40bc554576b2d1e4682e550d5ad81ec2, type: 3}
+  - {fileID: 21300000, guid: dfbbe709510a386479d110f8647bc8c7, type: 3}
+  - {fileID: 21300000, guid: 7e5efe7c435c88d4daaab9fc064da75b, type: 3}
+  - {fileID: 21300000, guid: e030bd0b690ee614cae422e1a8af5653, type: 3}
+  - {fileID: 21300000, guid: fefd4e82b46a7ce49be0aa7abda380b0, type: 3}
+  spriteIces:
+  - {fileID: 21300000, guid: 7fe341409203b1343acfba60aaab6563, type: 3}
+  - {fileID: 21300000, guid: c3dce7cf868f25f45beec73020bc1ead, type: 3}
+  - {fileID: 21300000, guid: 0a169b9190f5ef643ab884fc60d9e2cb, type: 3}
+  - {fileID: 21300000, guid: 14caa6fdafc519042b58d84b6e39b251, type: 3}
+  - {fileID: 21300000, guid: 16d530cb0ad982347894893c00e0b059, type: 3}
+  ice: {fileID: 1844367863}
+  spriteGlobes:
+  - {fileID: 21300000, guid: a592d30c48a25bc4490e8d631a1648a3, type: 3}
+  - {fileID: 21300000, guid: ecb01d22ffacc6549a3a0b1ce71e1d36, type: 3}
+  - {fileID: 21300000, guid: 4cb88730bf7b0ef45b899d9e4502d441, type: 3}
+  - {fileID: 21300000, guid: 371c00a6df4001c40ada26221bd70926, type: 3}
+  - {fileID: 21300000, guid: 1d79c0224f66f9c4db02b61e84678224, type: 3}
+  globe: {fileID: 144247455}
   barFoodFill: {fileID: 1465485015}
   barCO2Fill: {fileID: 693082071}
   barContaminationFill: {fileID: 1153081229}
@@ -1666,6 +1697,8 @@ MonoBehaviour:
   maxCO2: 20
   maxContamination: 16
   maxDeaths: 15
+  maxTotalCO2: 75
+  maxTotalContamination: 50
   textNextYear: {fileID: 1974582349}
   spriteEndNormal: {fileID: 21300000, guid: de29707372b12f044baea20a2af73b2c, type: 3}
   spriteEndDeath: {fileID: 21300000, guid: e6ee7f5f59f7d054b9c5292f0783fabf, type: 3}
@@ -1726,6 +1759,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &519420034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ListenerNumber: 0
 --- !u!1 &586869630
 GameObject:
   m_ObjectHideFlags: 0
