@@ -29,6 +29,14 @@ public class MainHandler : MonoBehaviour {
 
     public SpriteRenderer[] worldLandSlots;
     public Sprite[] spriteLandSlots;
+    int[] landSlots;
+    public Sprite[] spriteIces;
+    public SpriteRenderer ice;
+    public Sprite[] spriteGlobes;
+    public SpriteRenderer globe;
+
+    int stateCO2;
+    int stateContamination;
 
     public GameObject barFoodFill;
     public GameObject barCO2Fill;
@@ -68,8 +76,8 @@ public class MainHandler : MonoBehaviour {
 
     int totalCO2;
     int totalContamination;
-    int maxTotalCO2 = 75;
-    int maxTotalContamination = 40;
+    public int maxTotalCO2 = 75;
+    public int maxTotalContamination = 50;
 
     int currentPosition;
 
@@ -85,6 +93,14 @@ public class MainHandler : MonoBehaviour {
     public SpriteRenderer popup;
 
     int currentNumberOfTrees;
+
+    // audio events
+    FMOD.Studio.EventInstance eventMenuCancel;
+    FMOD.Studio.EventInstance eventMenuConfirm;
+    FMOD.Studio.EventInstance eventMenuNavigate;
+    FMOD.Studio.EventInstance eventAmbience;
+    FMOD.Studio.EventInstance eventBuildingPlacement;
+    FMOD.Studio.EventInstance eventMainTheme;
 
     readonly int NOTHING = -1, COWFARM = 0, CHICKENFARM = 1, EGGFARM = 2, WEEDFARM = 3, CABBAGEFARM = 4, FOREST = 5, 
         COWHAPPY = 6, COWFOOD = 7, CHICKENHAPPY = 8, CHICKENFOOD = 9, EGGHAPPY = 10, EGGFOOD = 11, WEEDFOOD = 12, CABBAGEFOOD = 13;
@@ -121,12 +137,12 @@ public class MainHandler : MonoBehaviour {
         Food: +1 food, +2 Con
     */
 
-
     // Use this for initialization
     void Start()
     {
         slotOptions = new int[3];
         worldSlotStatus = new int[8];
+        landSlots = new int[8];
 
         barFoodPosition = barFoodFill.transform.position;
         barCO2Position = barCO2Fill.transform.position;
@@ -136,12 +152,24 @@ public class MainHandler : MonoBehaviour {
         barWellfareMarkerPosition = barWellfareMarker.transform.position;
 
         foodReqs = new int[] { 1, 2, 4, 6, 8, 9, 11, 13, 14, 16, 17, 19, 22, 24, 27 };
+        
+        eventMainTheme = FMODUnity.RuntimeManager.CreateInstance("event:/Music/MainTheme");
+        eventMenuCancel = FMODUnity.RuntimeManager.CreateInstance("event:/Sounds/Interface/MenuCancel");
+        eventMenuConfirm = FMODUnity.RuntimeManager.CreateInstance("event:/Sounds/Interface/MenuConfirm");
+        eventMenuNavigate = FMODUnity.RuntimeManager.CreateInstance("event:/Sounds/Interface/MenuNavigate");
+        eventAmbience = FMODUnity.RuntimeManager.CreateInstance("event:/Sounds/Zone/Ambience");
+        eventBuildingPlacement = FMODUnity.RuntimeManager.CreateInstance("event:/Sounds/Effect/BuildingPlacement");
 
         InitGame();
 	}
 
     void InitGame()
     {
+        stateCO2 = 0;
+        stateContamination = 0;
+
+        ice.sprite = spriteIces[0];
+        globe.sprite = spriteGlobes[0];
         currentFood = 0;
         extraFood = 0;
         currentContamination = 0;
@@ -161,7 +189,9 @@ public class MainHandler : MonoBehaviour {
         // randomize land slots
         for (int i = 0; i < worldLandSlots.Length; i++)
         {
-            worldLandSlots[i].sprite = spriteLandSlots[Random.Range(0, spriteLandSlots.Length)];
+            int temp = Random.Range(0, 8);
+            landSlots[i] = temp;
+            worldLandSlots[i].sprite = spriteLandSlots[temp];
         }
         selectedBuilding = -1;
         currentPosition = 0;
@@ -177,6 +207,9 @@ public class MainHandler : MonoBehaviour {
         gameOver = false;
         textNextYear.text = "Next Year";
         textGameOver.text = "";
+
+        eventMainTheme.start();
+        eventAmbience.start();
 
         NewDay();
         CheckChanges();
@@ -316,7 +349,9 @@ public class MainHandler : MonoBehaviour {
             InitGame();
             return;
         }
-
+        
+        eventMenuConfirm.start();
+        
         for (int i = 0; i < slotOptions.Length; i++)
         {
             slotOptions[i] = Random.Range(0, 5);
@@ -343,6 +378,58 @@ public class MainHandler : MonoBehaviour {
             requiredFood = foodReqs[currentFoodReqPosition] + extraFood;
         }
         selectedBuilding = -1;
+
+        // check punishments
+        if (totalCO2 >= 15 && stateCO2 == 0)
+        {
+            stateCO2 = 1;
+            ice.sprite = spriteIces[1];
+        }
+        else if (totalCO2 >= 30 && stateCO2 == 1)
+        {
+            stateCO2 = 2;
+            for (int i = 0; i < worldLandSlots.Length; i++)
+            {
+                worldLandSlots[i].sprite = spriteLandSlots[landSlots[i] + 8];
+            }
+            ice.sprite = spriteIces[2];
+        }
+        else if (totalCO2 >= 45 && stateCO2 == 2)
+        {
+            stateCO2 = 3;
+            ice.sprite = spriteIces[3];
+        }
+        else if (totalCO2 >= 60 && stateCO2 == 3)
+        {
+            stateCO2 = 4;
+            for (int i = 0; i < worldLandSlots.Length; i++)
+            {
+                worldLandSlots[i].sprite = spriteLandSlots[landSlots[i] + 8];
+            }
+            ice.sprite = spriteIces[4];
+        }
+
+        if (totalContamination >= 10 && stateCO2 == 0)
+        {
+            stateContamination = 1;
+            globe.sprite = spriteGlobes[1];
+        }
+        else if (totalContamination >= 20 && stateCO2 == 1)
+        {
+            stateContamination = 2;
+            globe.sprite = spriteGlobes[2];
+        }
+        else if (totalContamination >= 30 && stateCO2 == 2)
+        {
+            stateContamination = 3;
+            globe.sprite = spriteGlobes[3];
+        }
+        else if (totalContamination >= 40 && stateCO2 == 3)
+        {
+            stateContamination = 4;
+            globe.sprite = spriteGlobes[4];
+        }
+
 
         //check game over
         if (currentDeaths >= maxDeaths)
@@ -386,7 +473,13 @@ public class MainHandler : MonoBehaviour {
     {
         if (gameOver) return;
 
-        if (worldSlotStatus[currentPosition] != -1 || currentActionsLeft <= 0) return;
+        if (worldSlotStatus[currentPosition] != -1 || currentActionsLeft <= 0)
+        {
+            eventMenuCancel.start();
+            return;
+        }
+
+        eventBuildingPlacement.start();
 
         selectedBuilding = slotOptions[slot];
 
@@ -426,7 +519,11 @@ public class MainHandler : MonoBehaviour {
     {
         if (gameOver) return;
 
-        if (currentActionsLeft <= 0) return;
+        if (currentActionsLeft <= 0)
+        {
+            eventMenuCancel.start();
+            return;
+        }
 
         if (slot != currentPosition)
         {
@@ -438,8 +535,12 @@ public class MainHandler : MonoBehaviour {
             {
                 currentPosition = slot;
                 currentActionsLeft--;
+                eventMenuNavigate.start();
                 CheckChanges();
-
+            }
+            else
+            {
+                eventMenuCancel.start();
             }
         }
     }
@@ -447,6 +548,8 @@ public class MainHandler : MonoBehaviour {
     public void Upgrade(bool happy)
     {
         if (gameOver) return;
+
+        eventMenuConfirm.start();
 
         if (worldSlotStatus[currentPosition] == COWFARM)
         {
@@ -526,6 +629,8 @@ public class MainHandler : MonoBehaviour {
     public void Trash()
     {
         if (gameOver) return;
+
+        eventMenuConfirm.start();
 
         if (!(worldSlotStatus[currentPosition] == NOTHING))
         {
