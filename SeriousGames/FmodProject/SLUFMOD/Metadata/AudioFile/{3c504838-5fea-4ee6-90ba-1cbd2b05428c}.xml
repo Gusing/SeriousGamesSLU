@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.10.00">
+    <object class="AudioFile" id="{3c504838-5fea-4ee6-90ba-1cbd2b05428c}">
+        <property name="assetPath">
+            <value>268108__nenadsimic__button-tick.wav</value>
+        </property>
+        <property name="frequencyInKHz">
+            <value>44.0999985</value>
+        </property>
+        <property name="channelCount">
+            <value>2</value>
+        </property>
+        <property name="length">
+            <value>0.21875283446712018</value>
+        </property>
+        <relationship name="masterAssetFolder">
+            <destination>{8f52cab5-a77c-403f-a21a-f0e08e40be36}</destination>
+        </relationship>
+    </object>
+</objects>
