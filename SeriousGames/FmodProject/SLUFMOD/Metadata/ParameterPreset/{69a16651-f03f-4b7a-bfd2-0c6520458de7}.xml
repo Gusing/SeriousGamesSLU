@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.10.00">
+    <object class="ParameterPreset" id="{69a16651-f03f-4b7a-bfd2-0c6520458de7}">
+        <property name="name">
+            <value>Contamination</value>
+        </property>
+        <relationship name="folder">
+            <destination>{30229bb0-aedf-4ff3-a210-c3d33608c1d3}</destination>
+        </relationship>
+        <relationship name="parameter">
+            <destination>{28c512fb-1b08-46ed-be85-ec207ad82776}</destination>
+        </relationship>
+    </object>
+    <object class="GameParameter" id="{28c512fb-1b08-46ed-be85-ec207ad82776}">
+        <property name="maximum">
+            <value>50</value>
+        </property>
+        <property name="initialValue">
+            <value>0</value>
+        </property>
+    </object>
+</objects>

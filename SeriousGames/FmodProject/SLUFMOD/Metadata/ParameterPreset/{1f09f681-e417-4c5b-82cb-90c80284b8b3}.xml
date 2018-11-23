@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.10.00">
+    <object class="ParameterPreset" id="{1f09f681-e417-4c5b-82cb-90c80284b8b3}">
+        <property name="name">
+            <value>Co2</value>
+        </property>
+        <relationship name="folder">
+            <destination>{30229bb0-aedf-4ff3-a210-c3d33608c1d3}</destination>
+        </relationship>
+        <relationship name="parameter">
+            <destination>{3614c96b-c093-45ae-a7a2-17240b169459}</destination>
+        </relationship>
+    </object>
+    <object class="GameParameter" id="{3614c96b-c093-45ae-a7a2-17240b169459}">
+        <property name="maximum">
+            <value>75</value>
+        </property>
+        <property name="initialValue">
+            <value>0</value>
+        </property>
+    </object>
+</objects>
