@@ -209,6 +209,7 @@ public class MainHandler : MonoBehaviour {
         textGameOver.text = "";
 
         eventMainTheme.start();
+        eventMainTheme.setParameterValue("Start", 1);
         eventAmbience.start();
 
         NewDay();
@@ -217,11 +218,16 @@ public class MainHandler : MonoBehaviour {
 	
 	void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape)) Application.Quit();
+
         textDay.text = "Year " + currentDay;
         textActionsLeft.text = "Actions Left: " + currentActionsLeft;
 
         textTotalCO2.text = "Total CO2: " + totalCO2;
         textTotalContamination.text = "Total Contamination: " + totalContamination;
+
+        eventMainTheme.setParameterValue("Contamination", totalContamination);
+        eventMainTheme.setParameterValue("Co2", totalCO2);
 
         // update number of trees
         currentNumberOfTrees = 0;
@@ -404,27 +410,27 @@ public class MainHandler : MonoBehaviour {
             stateCO2 = 4;
             for (int i = 0; i < worldLandSlots.Length; i++)
             {
-                worldLandSlots[i].sprite = spriteLandSlots[landSlots[i] + 8];
+                worldLandSlots[i].sprite = spriteLandSlots[landSlots[i] + 16];
             }
             ice.sprite = spriteIces[4];
         }
 
-        if (totalContamination >= 10 && stateCO2 == 0)
+        if (totalContamination >= 10 && stateContamination == 0)
         {
             stateContamination = 1;
             globe.sprite = spriteGlobes[1];
         }
-        else if (totalContamination >= 20 && stateCO2 == 1)
+        else if (totalContamination >= 20 && stateContamination == 1)
         {
             stateContamination = 2;
             globe.sprite = spriteGlobes[2];
         }
-        else if (totalContamination >= 30 && stateCO2 == 2)
+        else if (totalContamination >= 30 && stateContamination == 2)
         {
             stateContamination = 3;
             globe.sprite = spriteGlobes[3];
         }
-        else if (totalContamination >= 40 && stateCO2 == 3)
+        else if (totalContamination >= 40 && stateContamination == 3)
         {
             stateContamination = 4;
             globe.sprite = spriteGlobes[4];
