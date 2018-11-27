@@ -13,9 +13,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HasSourceProject: 1
   HasPlatforms: 1
-  sourceProjectPath: FmodProject/SLUFMOD/SLUFMOD.fspro
-  SourceProjectPathUnformatted: FmodProject/SLUFMOD/SLUFMOD.fspro
-  SourceBankPathUnformatted: FmodProject/SLUFMOD/Build
+  sourceProjectPath: FmodProject\SLUFMOD\SLUFMOD.fspro
+  SourceProjectPathUnformatted: FmodProject\SLUFMOD\SLUFMOD.fspro
+  SourceBankPathUnformatted: FmodProject\SLUFMOD\Build
   AutomaticEventLoading: 1
   AutomaticSampleLoading: 0
   ImportType: 0
