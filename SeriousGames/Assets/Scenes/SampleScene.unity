@@ -180,7 +180,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Upgrade Foody
+  m_Text: 'Uppgradera Mat
 
 '
 --- !u!222 &14226368
@@ -1700,12 +1700,30 @@ MonoBehaviour:
   maxTotalCO2: 75
   maxTotalContamination: 50
   textNextYear: {fileID: 1974582349}
+  spriteIntro: {fileID: 21300000, guid: 5a47607f1cbf5424285e3b61c475a141, type: 3}
   spriteEndNormal: {fileID: 21300000, guid: de29707372b12f044baea20a2af73b2c, type: 3}
   spriteEndDeath: {fileID: 21300000, guid: e6ee7f5f59f7d054b9c5292f0783fabf, type: 3}
   spriteEndFlood: {fileID: 21300000, guid: 559c7fe5fe2e78844aa775e67b59914f, type: 3}
   spriteEndContaminated: {fileID: 21300000, guid: 8df4b1effcee9584bbad4680d2096a6c,
     type: 3}
   popup: {fileID: 149138509}
+  psCO2Build: {fileID: 198922115233084706, guid: 464f0931e603de24cad08eb50d3c66a2,
+    type: 2}
+  psContaminationBuild: {fileID: 198162474304528576, guid: 4c121ee803811a54fad48022dbaa24f7,
+    type: 2}
+  psCO2Loop: {fileID: 198537131627111396, guid: a33878e92f2be8a429d5869e38ccf760,
+    type: 2}
+  psContaminationLoop: {fileID: 198711208957264426, guid: a516343d37de88c4f8893ec4b6569fb6,
+    type: 2}
+  psCow: {fileID: 198556144682582774, guid: fa8b821781274b84286bbe169714c569, type: 2}
+  psChicken: {fileID: 198885408965357108, guid: c5dbcae2acf56fd41b317d7fe8425490,
+    type: 2}
+  psHeart: {fileID: 198305441359521220, guid: 227696368ec84ae4cbe0408788b81cff, type: 2}
+  psSkull: {fileID: 198797205450725740, guid: d29999cf65cf30e46a06b76a0622300c, type: 2}
+  psWellfareHappy: {fileID: 198387517421255068, guid: b866cb14308efbb499c1866ece35f02f,
+    type: 2}
+  psWellfareSad: {fileID: 198851904783440660, guid: dcd78e8a25996da42a854d23675a72d4,
+    type: 2}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -3297,7 +3315,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Upgrade Happy
+  m_Text: 'Uppgradera Glad
 
 '
 --- !u!222 &1074347670
@@ -3662,9 +3680,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Year 1
-
-'
+  m_Text: "\xC5r 2018\n\n"
 --- !u!222 &1099910354
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5748,7 +5764,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -51.7, y: 15.6}
-  m_SizeDelta: {x: 92, y: 23}
+  m_SizeDelta: {x: 95, y: 23}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1718416984
 MonoBehaviour:
@@ -6402,7 +6418,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Actions Left: 0'
+  m_Text: 'Handlingar kvar: 0'
 --- !u!222 &1876998491
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6874,7 +6890,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Next Year
+  m_Text: "N\xE4sta \xC5r\n"
 --- !u!222 &1974582350
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7024,7 +7040,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Clear current plot
+  m_Text: 'Rensa land
 
 '
 --- !u!222 &2084624739
@@ -7342,7 +7358,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 48.1, y: 14.8}
-  m_SizeDelta: {x: 92, y: 23}
+  m_SizeDelta: {x: 95, y: 23}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2142240752
 MonoBehaviour:
