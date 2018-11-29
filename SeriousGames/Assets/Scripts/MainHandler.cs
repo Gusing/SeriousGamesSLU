@@ -164,7 +164,7 @@ public class MainHandler : MonoBehaviour {
         barFoodMarkerPosition = barFoodMarker.transform.position;
         barWellfareMarkerPosition = barWellfareMarker.transform.position;
 
-        foodReqs = new int[] { 1, 2, 4, 6, 8, 9, 11, 13, 14, 16, 17, 19, 22, 24, 27 };
+        foodReqs = new int[] { 1, 2, 4, 6, 8, 9, 11, 13, 14, 16, 17, 19, 22, 24, 27, 29 };
         
         eventMainTheme = FMODUnity.RuntimeManager.CreateInstance("event:/Music/MainTheme");
         eventMenuCancel = FMODUnity.RuntimeManager.CreateInstance("event:/Sounds/Interface/MenuCancel");

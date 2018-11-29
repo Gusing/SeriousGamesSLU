@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EditorBanks:
   - {fileID: 114364897770302134}
-  - {fileID: 114700696472873922}
+  - {fileID: 114810561976627914}
   EditorEvents:
   - {fileID: 114481912995712386}
   - {fileID: 114700226091780348}
@@ -21,9 +21,9 @@ MonoBehaviour:
   - {fileID: 114929151174693980}
   - {fileID: 114151476865687070}
   - {fileID: 114136335909004580}
-  MasterBankRef: {fileID: 114700696472873922}
+  MasterBankRef: {fileID: 114810561976627914}
   StringsBankRef: {fileID: 114364897770302134}
-  stringsBankWriteTime: 636790256426061282
+  stringsBankWriteTime: 636783182379074238
   cacheVersion: 2
 --- !u!114 &114001344135187472
 MonoBehaviour:
@@ -259,17 +259,14 @@ MonoBehaviour:
   Path: event:/Music/MainTheme
   guid: ee3a0c4040e0e04eb126f353515b4773
   Banks:
-  - {fileID: 114700696472873922}
+  - {fileID: 114810561976627914}
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
-  Parameters:
-  - {fileID: 114427252147394218}
-  - {fileID: 114112833468220780}
-  - {fileID: 114418145181704150}
+  Parameters: []
   MinDistance: 0
   MaxDistance: 0
-  Length: 16500
+  Length: 34594
 --- !u!114 &114139490300972768
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -329,7 +326,7 @@ MonoBehaviour:
   Path: event:/Sounds/Effect/BuildingPlacement
   guid: d359d61dc16f5d4a9dcf83751e8f4f44
   Banks:
-  - {fileID: 114700696472873922}
+  - {fileID: 114810561976627914}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -458,7 +455,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Path: FmodProject\SLUFMOD\Build\Desktop\Master Bank.strings.bank
-  lastModified: 636790256426061282
+  lastModified: 636783182379074238
   LoadResult: 0
   FileSizes:
   - Name: Desktop
@@ -530,7 +527,7 @@ MonoBehaviour:
   Path: event:/Sounds/Interface/MenuNavigate
   guid: 13a58d6ca81c8b47869797720f677974
   Banks:
-  - {fileID: 114700696472873922}
+  - {fileID: 114810561976627914}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -824,7 +821,7 @@ MonoBehaviour:
   Path: event:/Sounds/Zone/Ambience
   guid: 3b8604807938264ca7b5f98fe6cad93b
   Banks:
-  - {fileID: 114700696472873922}
+  - {fileID: 114810561976627914}
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
@@ -991,6 +988,25 @@ MonoBehaviour:
   Min: 0
   Max: 50
   Default: 0
+--- !u!114 &114810561976627914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: C:\Users\Sunscale2\Documents\GitHub\SeriousGamesSLU\SeriousGames\FmodProject\SLUFMOD\Build\Desktop\Master
+    Bank.bank
+  lastModified: 636783182378964242
+  LoadResult: 0
+  FileSizes:
+  - Name: Desktop
+    Value: 1986240
+  Exists: 1
 --- !u!114 &114818253472663226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1053,7 +1069,7 @@ MonoBehaviour:
   Path: event:/Sounds/Interface/MenuConfirm
   guid: 8df3e8fa5090434b8817503746300dab
   Banks:
-  - {fileID: 114700696472873922}
+  - {fileID: 114810561976627914}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -1120,7 +1136,7 @@ MonoBehaviour:
   Path: event:/Sounds/Interface/MenuCancel
   guid: a119e54a8fe4024c94ebd7d7ee7d8ec2
   Banks:
-  - {fileID: 114700696472873922}
+  - {fileID: 114810561976627914}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
