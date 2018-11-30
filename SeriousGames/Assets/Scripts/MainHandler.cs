@@ -84,8 +84,10 @@ public class MainHandler : MonoBehaviour {
     int currentActionsLeft;
 
     bool gameOver;
+	bool showingIntro;
     public Text textNextYear;
 
+    public Sprite spriteIntro;
     public Sprite spriteEndNormal;
     public Sprite spriteEndDeath;
     public Sprite spriteEndFlood;
@@ -93,6 +95,17 @@ public class MainHandler : MonoBehaviour {
     public SpriteRenderer popup;
 
     int currentNumberOfTrees;
+
+	public ParticleSystem psCO2Build;
+	public ParticleSystem psContaminationBuild;
+	public ParticleSystem psCO2Loop;
+	public ParticleSystem psContaminationLoop;
+	public ParticleSystem psCow;
+	public ParticleSystem psChicken;
+	public ParticleSystem psHeart;
+	public ParticleSystem psSkull;
+	public ParticleSystem psWellfareHappy;
+	public ParticleSystem psWellfareSad;
 
     // audio events
     FMOD.Studio.EventInstance eventMenuCancel;
@@ -151,7 +164,7 @@ public class MainHandler : MonoBehaviour {
         barFoodMarkerPosition = barFoodMarker.transform.position;
         barWellfareMarkerPosition = barWellfareMarker.transform.position;
 
-        foodReqs = new int[] { 1, 2, 4, 6, 8, 9, 11, 13, 14, 16, 17, 19, 22, 24, 27 };
+        foodReqs = new int[] { 1, 2, 4, 6, 8, 9, 11, 13, 14, 16, 17, 19, 22, 24, 27, 29 };
         
         eventMainTheme = FMODUnity.RuntimeManager.CreateInstance("event:/Music/MainTheme");
         eventMenuCancel = FMODUnity.RuntimeManager.CreateInstance("event:/Sounds/Interface/MenuCancel");
@@ -161,6 +174,13 @@ public class MainHandler : MonoBehaviour {
         eventBuildingPlacement = FMODUnity.RuntimeManager.CreateInstance("event:/Sounds/Effect/BuildingPlacement");
 
         InitGame();
+
+		showingIntro = true;
+        gameOver = true;
+
+		popup.sprite = spriteIntro;
+		popup.enabled = true;
+		textNextYear.text = "Börja";
 	}
 
     void InitGame()
@@ -205,7 +225,7 @@ public class MainHandler : MonoBehaviour {
         }
 
         gameOver = false;
-        textNextYear.text = "Next Year";
+        textNextYear.text = "Nästa År";
         textGameOver.text = "";
 
         eventMainTheme.start();
@@ -220,8 +240,8 @@ public class MainHandler : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.Escape)) Application.Quit();
 
-        textDay.text = "Year " + currentDay;
-        textActionsLeft.text = "Actions Left: " + currentActionsLeft;
+		textDay.text = "År " + (2018 + currentDay);
+        textActionsLeft.text = "Handlingar kvar: " + currentActionsLeft;
 
         textTotalCO2.text = "Total CO2: " + totalCO2;
         textTotalContamination.text = "Total Contamination: " + totalContamination;
@@ -241,7 +261,7 @@ public class MainHandler : MonoBehaviour {
             worldSlotStatus[currentPosition] == EGGFARM ||
             worldSlotStatus[currentPosition] == CABBAGEFARM ||
             worldSlotStatus[currentPosition] == WEEDFARM) &&
-            currentActionsLeft > 0)
+			currentActionsLeft > 0 && !gameOver && !showingIntro)
         {
             btnUpgradeFood.SetActive(true);
         }
@@ -253,7 +273,7 @@ public class MainHandler : MonoBehaviour {
         if ((worldSlotStatus[currentPosition] == COWFARM ||
             worldSlotStatus[currentPosition] == CHICKENFARM ||
             worldSlotStatus[currentPosition] == EGGFARM) &&
-            currentActionsLeft > 0)
+			currentActionsLeft > 0 && !gameOver && !showingIntro)
         {
             btnUpgradeHappy.SetActive(true);
         }
@@ -263,12 +283,11 @@ public class MainHandler : MonoBehaviour {
         }
 
         if (worldSlotStatus[currentPosition] != NOTHING &&
-            currentActionsLeft > 0)
+			currentActionsLeft > 0 && !gameOver && !showingIntro)
         {
             btnTrash.SetActive(true);
         }
         else btnTrash.SetActive(false);
-
 
         // update bars
         barFoodFill.transform.localScale = new Vector3(((float)currentFood / (float)maxFood), 1f);
@@ -355,6 +374,13 @@ public class MainHandler : MonoBehaviour {
             InitGame();
             return;
         }
+
+		if (showingIntro)
+		{
+			showingIntro = false;
+			InitGame();
+			return;
+		}
         
         eventMenuConfirm.start();
         
@@ -444,7 +470,7 @@ public class MainHandler : MonoBehaviour {
             popup.enabled = true;
             currentDeaths = maxDeaths;
             gameOver = true;
-            textNextYear.text = "Restart";
+            textNextYear.text = "Börja om";
         }
         else if (totalCO2 >= maxTotalCO2)
         {
@@ -452,7 +478,7 @@ public class MainHandler : MonoBehaviour {
             popup.enabled = true;
             totalCO2 = maxTotalCO2;
             gameOver = true;
-            textNextYear.text = "Restart";
+            textNextYear.text = "Börja om";
         }
         else if (totalContamination >= maxTotalContamination)
         {
@@ -460,7 +486,7 @@ public class MainHandler : MonoBehaviour {
             popup.enabled = true;
             totalContamination = maxTotalContamination;
             gameOver = true;
-            textNextYear.text = "Restart";
+			textNextYear.text = "Börja om";
         }
         else if (currentDay == 15)
         {
@@ -468,7 +494,7 @@ public class MainHandler : MonoBehaviour {
             popup.enabled = true;
             textGameOver.text = Mathf.RoundToInt(((maxTotalContamination - totalContamination) + (maxTotalCO2 - totalCO2) + (maxDeaths - currentDeaths)) * ((float)currentWellfare / 10f)).ToString();
             gameOver = true;
-            textNextYear.text = "Restart";
+			textNextYear.text = "Börja om";
         }
 
         currentDay++;
@@ -496,16 +522,19 @@ public class MainHandler : MonoBehaviour {
         {
             currentFood += 4;
             currentCO2 += 3;
+			Instantiate (psCO2Build, worldLandSlots[currentPosition].transform.position, new Quaternion(0, 0, 0, 0));
         }
         if (selectedBuilding == CHICKENFARM)
         {
             currentFood += 3;
             currentCO2 += 2;
+			Instantiate (psCO2Build, worldLandSlots[currentPosition].transform.position, new Quaternion(0, 0, 0, 0));
         }
         if (selectedBuilding == EGGFARM)
         {
             currentFood += 2;
             currentCO2 += 1;
+			Instantiate (psCO2Build, worldLandSlots[currentPosition].transform.position, new Quaternion(0, 0, 0, 0));
         }
         if (selectedBuilding == WEEDFARM)
         {
@@ -565,6 +594,9 @@ public class MainHandler : MonoBehaviour {
                 currentFood -= 1;
                 worldSlotStatus[currentPosition] = COWHAPPY;
                 currentActionsLeft -= 1;
+				Instantiate (psCow, worldLandSlots[currentPosition].transform.position, new Quaternion(0, 0, 0, 0));
+				Instantiate (psHeart, worldLandSlots[currentPosition].transform.position, new Quaternion(0, 0, 0, 0));
+				Instantiate (psWellfareHappy, barWellfareMarker.transform.position + new Vector3(0.2f, 0), new Quaternion(0, 0, 0, 0));
             }
             else
             {
@@ -573,6 +605,10 @@ public class MainHandler : MonoBehaviour {
                 currentCO2 += 1;
                 worldSlotStatus[currentPosition] = COWFOOD;
                 currentActionsLeft -= 1;
+				Instantiate (psCO2Build, worldLandSlots[currentPosition].transform.position, new Quaternion(0, 0, 0, 0));
+				Instantiate (psCow, worldLandSlots[currentPosition].transform.position, new Quaternion(0, 0, 0, 0));
+				Instantiate (psSkull, worldLandSlots[currentPosition].transform.position, new Quaternion(0, 0, 0, 0));
+				Instantiate (psWellfareSad, barWellfareMarker.transform.position + new Vector3(-0.2f, 0), new Quaternion(0, 0, 0, 0));
             }
         }
         if (worldSlotStatus[currentPosition] == CHICKENFARM)
@@ -582,6 +618,9 @@ public class MainHandler : MonoBehaviour {
                 currentWellfare += 1;
                 worldSlotStatus[currentPosition] = CHICKENHAPPY;
                 currentActionsLeft -= 1;
+				Instantiate (psChicken, worldLandSlots[currentPosition].transform.position, new Quaternion(0, 0, 0, 0));
+				Instantiate (psHeart, worldLandSlots[currentPosition].transform.position, new Quaternion(0, 0, 0, 0));
+				Instantiate (psWellfareHappy, barWellfareMarker.transform.position + new Vector3(0.2f, 0), new Quaternion(0, 0, 0, 0));
             }
             else
             {
@@ -590,6 +629,9 @@ public class MainHandler : MonoBehaviour {
                 currentCO2 -= 1;
                 worldSlotStatus[currentPosition] = CHICKENFOOD;
                 currentActionsLeft -= 1;
+				Instantiate (psChicken, worldLandSlots[currentPosition].transform.position, new Quaternion(0, 0, 0, 0));
+				Instantiate (psSkull, worldLandSlots[currentPosition].transform.position, new Quaternion(0, 0, 0, 0));
+				Instantiate (psWellfareSad, barWellfareMarker.transform.position + new Vector3(-0.2f, 0), new Quaternion(0, 0, 0, 0));
             }
         }
         if (worldSlotStatus[currentPosition] == EGGFARM)
@@ -599,6 +641,9 @@ public class MainHandler : MonoBehaviour {
                 currentWellfare += 2;
                 worldSlotStatus[currentPosition] = EGGHAPPY;
                 currentActionsLeft -= 1;
+				Instantiate (psChicken, worldLandSlots[currentPosition].transform.position, new Quaternion(0, 0, 0, 0));
+				Instantiate (psHeart, worldLandSlots[currentPosition].transform.position, new Quaternion(0, 0, 0, 0));
+				Instantiate (psWellfareHappy, barWellfareMarker.transform.position + new Vector3(0.2f, 0), new Quaternion(0, 0, 0, 0));
             }
             else
             {
@@ -606,6 +651,9 @@ public class MainHandler : MonoBehaviour {
                 currentFood += 1;
                 worldSlotStatus[currentPosition] = EGGFOOD;
                 currentActionsLeft -= 1;
+				Instantiate (psChicken, worldLandSlots[currentPosition].transform.position, new Quaternion(0, 0, 0, 0));
+				Instantiate (psSkull, worldLandSlots[currentPosition].transform.position, new Quaternion(0, 0, 0, 0));
+				Instantiate (psWellfareSad, barWellfareMarker.transform.position + new Vector3(-0.2f, 0), new Quaternion(0, 0, 0, 0));
             }
         }
         if (worldSlotStatus[currentPosition] == WEEDFARM)
@@ -616,6 +664,7 @@ public class MainHandler : MonoBehaviour {
                 currentFood += 2;
                 worldSlotStatus[currentPosition] = WEEDFOOD;
                 currentActionsLeft -= 1;
+				Instantiate (psContaminationBuild, worldLandSlots[currentPosition].transform.position, new Quaternion(0, 0, 0, 0));
             }
         }
         if (worldSlotStatus[currentPosition] == CABBAGEFARM)
@@ -626,6 +675,7 @@ public class MainHandler : MonoBehaviour {
                 currentFood += 1;
                 worldSlotStatus[currentPosition] = CABBAGEFOOD;
                 currentActionsLeft -= 1;
+				Instantiate (psContaminationBuild, worldLandSlots[currentPosition].transform.position, new Quaternion(0, 0, 0, 0));
             }
         }
 
