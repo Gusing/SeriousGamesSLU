@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.10.00">
+    <object class="AudioFile" id="{0adddc47-d551-4464-9d91-e71770b9e2d7}">
+        <property name="assetPath">
+            <value>Minor_ZenGarden.wav</value>
+        </property>
+        <property name="isStreaming">
+            <value>true</value>
+        </property>
+        <property name="frequencyInKHz">
+            <value>44.0999985</value>
+        </property>
+        <property name="channelCount">
+            <value>2</value>
+        </property>
+        <property name="length">
+            <value>34.594603174603172</value>
+        </property>
+        <relationship name="masterAssetFolder">
+            <destination>{8f52cab5-a77c-403f-a21a-f0e08e40be36}</destination>
+        </relationship>
+    </object>
+</objects>
