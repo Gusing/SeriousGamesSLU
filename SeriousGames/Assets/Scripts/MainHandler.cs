@@ -106,6 +106,8 @@ public class MainHandler : MonoBehaviour {
 	public ParticleSystem psSkull;
 	public ParticleSystem psWellfareHappy;
 	public ParticleSystem psWellfareSad;
+	public ParticleSystem psDeathIncrease;
+	public ParticleSystem psLowFood;
 
     // audio events
     FMOD.Studio.EventInstance eventMenuCancel;
@@ -384,9 +386,14 @@ public class MainHandler : MonoBehaviour {
         
         eventMenuConfirm.start();
         
+		List<int> tempBuildings = new List<int> {0, 1, 2, 3, 4, 5};
+
         for (int i = 0; i < slotOptions.Length; i++)
         {
-            slotOptions[i] = Random.Range(0, 5);
+			int tRand = Random.Range (0, tempBuildings.Count);
+			slotOptions[i] = tempBuildings[tRand];
+
+			tempBuildings.RemoveAt(tRand);
 
             slots[i].sprite = spriteSlots[slotOptions[i]];
         }
@@ -398,6 +405,8 @@ public class MainHandler : MonoBehaviour {
         if (currentFood < requiredFood)
         {
             currentDeaths += requiredFood - currentFood;
+			Instantiate(psDeathIncrease, barDeathFill.transform.position + new Vector3(((float)currentDeaths / (float)20) * 2.5f, 0, 0), new Quaternion(0, 0, 0, 0));
+			Instantiate(psLowFood, barFoodMarker.transform.position, new Quaternion(0, 0, 0, 0));
             if (requiredFood - currentFood == 1)
             {
                 extraFood += 1;
