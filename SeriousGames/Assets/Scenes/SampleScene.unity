@@ -1798,6 +1798,7 @@ GameObject:
   m_Component:
   - component: {fileID: 586869632}
   - component: {fileID: 586869631}
+  - component: {fileID: 586869633}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -1864,6 +1865,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &586869633
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 586869630}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 621406b64a6282741818b43ffc890dc5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &634136561
 GameObject:
   m_ObjectHideFlags: 0
@@ -4057,6 +4076,7 @@ GameObject:
   - component: {fileID: 1235419834}
   - component: {fileID: 1235419833}
   - component: {fileID: 1235419836}
+  - component: {fileID: 1235419837}
   m_Layer: 5
   m_Name: textGameOver
   m_TagString: Untagged
@@ -4133,6 +4153,17 @@ CanvasGroup:
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
+--- !u!114 &1235419837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1235419832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 595a7da058201dd4c87a8bdefa31d53b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1236387194
 GameObject:
   m_ObjectHideFlags: 0
