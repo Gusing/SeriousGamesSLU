@@ -74,7 +74,8 @@ public class MainHandler : MonoBehaviour {
     int currentDeaths;
     int currentWellfare;
 
-    int totalCO2;
+    [HideInInspector]
+    public int totalCO2;
     int totalContamination;
     public int maxTotalCO2 = 75;
     public int maxTotalContamination = 50;
