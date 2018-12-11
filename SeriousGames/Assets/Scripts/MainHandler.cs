@@ -111,6 +111,7 @@ public class MainHandler : MonoBehaviour {
 
     //Animation events
     private CharacterAnimation characterAnimation;
+    float rotationAngle;
 
     // audio events
     FMOD.Studio.EventInstance eventMenuCancel;
@@ -197,6 +198,9 @@ public class MainHandler : MonoBehaviour {
     {
         stateCO2 = 0;
         stateContamination = 0;
+
+        //Resetting planet's rotation
+        characterAnimation.ResetRotation();
 
         ice.sprite = spriteIces[0];
         globe.sprite = spriteGlobes[0];
@@ -322,7 +326,9 @@ public class MainHandler : MonoBehaviour {
 
     void CheckChanges()
     {
+        characterAnimation.rotationActivation(currentPosition);
         // + 2.61
+        /* Not necessary after animation's change.
         if (currentPosition == 0)
         {
             player.transform.position = new Vector3(-0.09f, 3.49f);
@@ -363,6 +369,7 @@ public class MainHandler : MonoBehaviour {
             player.transform.position = new Vector3(3.35f, 2.98f);
             player.transform.eulerAngles = new Vector3(0, 0, 315);
         }
+        */
         for (int i = 0; i < worldSlotStatus.Length; i++)
         {
             if (worldSlotStatus[i] == -1) worldSlots[i].enabled = false;
