@@ -109,6 +109,9 @@ public class MainHandler : MonoBehaviour {
 	public ParticleSystem psDeathIncrease;
 	public ParticleSystem psLowFood;
 
+    //Animation events
+    private CharacterAnimation characterAnimation;
+
     // audio events
     FMOD.Studio.EventInstance eventMenuCancel;
     FMOD.Studio.EventInstance eventMenuConfirm;
@@ -153,6 +156,11 @@ public class MainHandler : MonoBehaviour {
     */
 
     // Use this for initialization
+    void Awake()
+    {
+        characterAnimation = player.GetComponent<CharacterAnimation>();
+    }
+
     void Start()
     {
         slotOptions = new int[3];
@@ -577,6 +585,7 @@ public class MainHandler : MonoBehaviour {
                 (currentPosition == 6 && slot == 0) ||
                 (currentPosition + 2 >= slot && currentPosition - 2 <= slot))
             {
+                characterAnimation.charAnimation(currentPosition, slot);
                 currentPosition = slot;
                 currentActionsLeft--;
                 eventMenuNavigate.start();
