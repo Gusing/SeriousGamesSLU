@@ -82,7 +82,8 @@ public class MainHandler : MonoBehaviour {
 
     int currentPosition;
 
-    int currentActionsLeft;
+    [HideInInspector]
+    public int currentActionsLeft;
 
     bool gameOver;
 	bool showingIntro;
@@ -192,7 +193,7 @@ public class MainHandler : MonoBehaviour {
 
 		popup.sprite = spriteIntro;
 		popup.enabled = true;
-		textNextYear.text = "Börja";
+		textNextYear.text = "BÖRJA";
 	}
 
     void InitGame()
@@ -240,7 +241,7 @@ public class MainHandler : MonoBehaviour {
         }
 
         gameOver = false;
-        textNextYear.text = "Nästa År";
+        textNextYear.text = "NÄSTA ÅR";
         textGameOver.text = "";
 
         eventMainTheme.start();
@@ -495,7 +496,7 @@ public class MainHandler : MonoBehaviour {
             popup.enabled = true;
             currentDeaths = maxDeaths;
             gameOver = true;
-            textNextYear.text = "Börja om";
+            textNextYear.text = "BÖRJA OM";
         }
         else if (totalCO2 >= maxTotalCO2)
         {
@@ -503,7 +504,7 @@ public class MainHandler : MonoBehaviour {
             popup.enabled = true;
             totalCO2 = maxTotalCO2;
             gameOver = true;
-            textNextYear.text = "Börja om";
+            textNextYear.text = "BÖRJA OM";
         }
         else if (totalContamination >= maxTotalContamination)
         {
@@ -511,7 +512,7 @@ public class MainHandler : MonoBehaviour {
             popup.enabled = true;
             totalContamination = maxTotalContamination;
             gameOver = true;
-			textNextYear.text = "Börja om";
+			textNextYear.text = "BÖRJA OM";
         }
         else if (currentDay == 15)
         {
@@ -519,7 +520,7 @@ public class MainHandler : MonoBehaviour {
             popup.enabled = true;
             textGameOver.text = Mathf.RoundToInt(((maxTotalContamination - totalContamination) + (maxTotalCO2 - totalCO2) + (maxDeaths - currentDeaths)) * ((float)currentWellfare / 10f)).ToString();
             gameOver = true;
-			textNextYear.text = "Börja om";
+			textNextYear.text = "BÖRJA OM";
         }
 
         currentDay++;
