@@ -74,14 +74,16 @@ public class MainHandler : MonoBehaviour {
     int currentDeaths;
     int currentWellfare;
 
-    int totalCO2;
+    [HideInInspector]
+    public int totalCO2;
     int totalContamination;
     public int maxTotalCO2 = 75;
     public int maxTotalContamination = 50;
 
     int currentPosition;
 
-    int currentActionsLeft;
+    [HideInInspector]
+    public int currentActionsLeft;
 
     bool gameOver;
 	bool showingIntro;
@@ -108,6 +110,10 @@ public class MainHandler : MonoBehaviour {
 	public ParticleSystem psWellfareSad;
 	public ParticleSystem psDeathIncrease;
 	public ParticleSystem psLowFood;
+
+    //Animation events
+    private CharacterAnimation characterAnimation;
+    float rotationAngle;
 
     // audio events
     FMOD.Studio.EventInstance eventMenuCancel;
@@ -153,6 +159,11 @@ public class MainHandler : MonoBehaviour {
     */
 
     // Use this for initialization
+    void Awake()
+    {
+        characterAnimation = player.GetComponent<CharacterAnimation>();
+    }
+
     void Start()
     {
         slotOptions = new int[3];
@@ -182,13 +193,16 @@ public class MainHandler : MonoBehaviour {
 
 		popup.sprite = spriteIntro;
 		popup.enabled = true;
-		textNextYear.text = "Börja";
+		textNextYear.text = "BÖRJA";
 	}
 
     void InitGame()
     {
         stateCO2 = 0;
         stateContamination = 0;
+
+        //Resetting planet's rotation
+        characterAnimation.ResetRotation();
 
         ice.sprite = spriteIces[0];
         globe.sprite = spriteGlobes[0];
@@ -227,7 +241,7 @@ public class MainHandler : MonoBehaviour {
         }
 
         gameOver = false;
-        textNextYear.text = "Nästa År";
+        textNextYear.text = "NÄSTA ÅR";
         textGameOver.text = "";
 
         eventMainTheme.start();
@@ -314,7 +328,9 @@ public class MainHandler : MonoBehaviour {
 
     void CheckChanges()
     {
+        characterAnimation.rotationActivation(currentPosition);
         // + 2.61
+        /* Not necessary after animation's change.
         if (currentPosition == 0)
         {
             player.transform.position = new Vector3(-0.09f, 3.49f);
@@ -355,6 +371,7 @@ public class MainHandler : MonoBehaviour {
             player.transform.position = new Vector3(3.35f, 2.98f);
             player.transform.eulerAngles = new Vector3(0, 0, 315);
         }
+        */
         for (int i = 0; i < worldSlotStatus.Length; i++)
         {
             if (worldSlotStatus[i] == -1) worldSlots[i].enabled = false;
@@ -479,7 +496,7 @@ public class MainHandler : MonoBehaviour {
             popup.enabled = true;
             currentDeaths = maxDeaths;
             gameOver = true;
-            textNextYear.text = "Börja om";
+            textNextYear.text = "BÖRJA OM";
         }
         else if (totalCO2 >= maxTotalCO2)
         {
@@ -487,7 +504,7 @@ public class MainHandler : MonoBehaviour {
             popup.enabled = true;
             totalCO2 = maxTotalCO2;
             gameOver = true;
-            textNextYear.text = "Börja om";
+            textNextYear.text = "BÖRJA OM";
         }
         else if (totalContamination >= maxTotalContamination)
         {
@@ -495,7 +512,7 @@ public class MainHandler : MonoBehaviour {
             popup.enabled = true;
             totalContamination = maxTotalContamination;
             gameOver = true;
-			textNextYear.text = "Börja om";
+			textNextYear.text = "BÖRJA OM";
         }
         else if (currentDay == 15)
         {
@@ -503,7 +520,7 @@ public class MainHandler : MonoBehaviour {
             popup.enabled = true;
             textGameOver.text = Mathf.RoundToInt(((maxTotalContamination - totalContamination) + (maxTotalCO2 - totalCO2) + (maxDeaths - currentDeaths)) * ((float)currentWellfare / 10f)).ToString();
             gameOver = true;
-			textNextYear.text = "Börja om";
+			textNextYear.text = "BÖRJA OM";
         }
 
         currentDay++;
@@ -577,6 +594,7 @@ public class MainHandler : MonoBehaviour {
                 (currentPosition == 6 && slot == 0) ||
                 (currentPosition + 2 >= slot && currentPosition - 2 <= slot))
             {
+                characterAnimation.charAnimation(currentPosition, slot);
                 currentPosition = slot;
                 currentActionsLeft--;
                 eventMenuNavigate.start();
