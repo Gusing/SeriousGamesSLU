@@ -1703,7 +1703,7 @@ MonoBehaviour:
   maxTotalContamination: 50
   currentActionsLeft: 0
   textNextYear: {fileID: 1974582349}
-  spriteIntro: {fileID: 21300000, guid: 5a47607f1cbf5424285e3b61c475a141, type: 3}
+  spriteIntro: {fileID: 21300000, guid: 6f762b4a9d6221a4fb150b9a6a2cf328, type: 3}
   spriteEndNormal: {fileID: 21300000, guid: de29707372b12f044baea20a2af73b2c, type: 3}
   spriteEndDeath: {fileID: 21300000, guid: e6ee7f5f59f7d054b9c5292f0783fabf, type: 3}
   spriteEndFlood: {fileID: 21300000, guid: 559c7fe5fe2e78844aa775e67b59914f, type: 3}
