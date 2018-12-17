@@ -246,7 +246,7 @@ public class MainHandler : MonoBehaviour {
 
         eventMainTheme.start();
         eventMainTheme.setParameterValue("Start", 1);
-        eventAmbience.start();
+        //eventAmbience.start();
 
         NewDay();
         CheckChanges();
